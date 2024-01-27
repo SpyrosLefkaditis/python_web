@@ -24,3 +24,4 @@ simple_web_scrape(url_to_scrape)
 #meta olo auto tha mpei se mia loopa opou tha koitaei gia kathe listing 
 #free api SEO
 #if (seo_rate < 0.6 ): fetch website, give info
+#printf("EISAI MALAKAS");
