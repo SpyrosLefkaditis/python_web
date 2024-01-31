@@ -40,8 +40,10 @@ if site_num <= 19 :
             scrape_from_container(url_to_scrape, container_id,x)
 else:
     for x in range(1, pagenum+1):
-        for container_id in range(1, 19):
+        for container_id in range(1, 20):
             scrape_from_container(url_to_scrape, container_id,x)
+    for container_id in range(1, pagenum_mod):
+        scrape_from_container(url_to_scrape, container_id,x+1)
         
     
     
