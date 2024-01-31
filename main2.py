@@ -37,3 +37,24 @@ url_to_scrape = 'https://www.xo.gr/search/'
 # Loop through specified number of sites
 for container_id in range(1, site_num+1):
     scrape_from_container(url_to_scrape, container_id)
+
+#we need to use  this type of logic for seo test and make rpecentage def check_seo(url):
+    # Create a Web3 object
+   # w3 = web3.Web3()
+
+    # Fetch SEO-related information for the given URL
+   # seo_info = w3.fetch(url)
+
+    # Print the SEO information
+  #  print(f"SEO information for {url}:")
+  #  print(f"Title: {seo_info.title}")
+  #  print(f"Meta Description: {seo_info.meta_description}")
+ #   print(f"Meta Keywords: {seo_info.meta_keywords}")
+#    print(f"Headers: {seo_info.headers}")
+
+# Example usage
+#url_to_check = 'https://example.com'
+
+# and we also need to  impelment the logic to jump to the next page 
+#after al this pyautogui for us for commecila use we need to impement more search engines and we also need html css template and django and server and firebase for authencitncation strip payment
+
