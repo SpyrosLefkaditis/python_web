@@ -1,27 +1,54 @@
 import urllib.request
+import re
 
-def simple_web_scrape(url):
+business_type = str(input("Enter the type of business you want to scrape: "))
+site_num = int(input("Enter the number of sites you want to scrape: "))
+
+
+def scrape_from_container(url, container_id, page_max , page_num):
+    
     try:
+        
+      
+        
+        if site_num > 20 :
+            page_max = float(site_num/21)
+            page_max=page_max//10
+        # Replace spaces in the business type with '+' cause of the logic of the links
+        modified_business_type = business_type.replace(' ', '+')
+
+        # Modify the container ID in the URL
+        
+        
+        container_url = f'{url}?what={modified_business_type}&lang=en&container_id={container_id}&page={page_num}'  # Adjust this part based on your actual URL structure
+
         # Open the URL and read the HTML content
-        with urllib.request.urlopen(url) as response:
+        with urllib.request.urlopen(container_url) as response:
             html_content = response.read().decode('utf-8')
 
-        # Simple string manipulation to extract data
-        start_index = html_content.find('<li itemscope="" itemtype="https://schema.org/Hotel" class="span12 listing spListing links_list" data-label="14208" data-aid="4249" data-ltype="2"> <div class="listingWhiteArea" id="listingContainer1" data-adid="SAE805802873">') + len('<li itemscope="" itemtype="https://schema.org/Hotel" class="span12 listing spListing links_list" data-label="14208" data-aid="4249" data-ltype="2"> <div class="listingWhiteArea" id="listingContainer1" data-adid="SAE805802873">')
-        end_index = html_content.find('</li>', start_index)
-        title = html_content[start_index:end_index].strip()
+        # Modify the regex pattern to match the specific structure of the container
+        website_match = re.search(r'<div class="listingWhiteArea" id="listingContainer' + str(container_id) + r'".*?<a class="et-v2-additional" .*? href="(.*?)" itemprop="url" .*?>', html_content, re.DOTALL)
+        
+        # Check if the match is found
+        if website_match:
+            website_link = website_match.group(1).strip()
 
-        # Print the extracted data
-        print(f"Title: {title}")
+            # Print the extracted website link
+            print(f"Container {container_id} Website: {website_link}")
+        else:
+            print(f"Container {container_id} Website link not found on the page.")
 
     except Exception as e:
         print(f"Error: {e}")
 
 # Example usage
-url_to_scrape = 'https://www.xo.gr/search/?what=hotels&lang=en'
-simple_web_scrape(url_to_scrape)
-#to string pou kanei extract ta data tha allazei ana selida me to listingContainerX, pou x einai to kathe listing ana selida
-#meta olo auto tha mpei se mia loopa opou tha koitaei gia kathe listing 
-#free api SEO
-#if (seo_rate < 0.6 ): fetch website, give info
-#printf("EISAI MALAKAS");
+url_to_scrape = 'https://www.xo.gr/search/'
+
+# Loop through specified number of sites
+if site_num <= 20:
+    for container_id in range(1, site_num+1):
+        scrape_from_container(url, container_id, page_max , page_num)
+else: 
+   for page_num in range(1, page_max):
+    for container_id in range(1, site_num+1):
+        scrape_from_container(url, container_id, page_max , page_num)
