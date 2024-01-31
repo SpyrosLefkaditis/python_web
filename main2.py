@@ -5,8 +5,8 @@ business_type = str(input("Enter the type of business you want to scrape: "))
 site_num = int(input("Enter the number of sites you want to scrape: "))
 # Replace spaces in the business type with '+' cause of the logic of the links
 business_type = business_type.replace(' ', '+')
-pagenum = int(site_num/ 21)
-pagenum_mod = int(site_num  % 21)
+pagenum = int(site_num/ 19)
+pagenum_mod = int(site_num  % 19)
 # Example usage
 url_to_scrape = 'https://www.xo.gr/search/'
 
@@ -34,14 +34,15 @@ def scrape_from_container(url, container_id,pagenum):
 
     except Exception as e:
         print(f"Error: {e}")
-if site_num <= 21 :
+if site_num <= 19 :
         x = 1
         for container_id in range(1, site_num+1):
             scrape_from_container(url_to_scrape, container_id,x)
-else :
-    for x in range(1, pagenum):
-        for container_id in range(1, site_num+1):
+else:
+    for x in range(1, pagenum+1):
+        for container_id in range(1, 19):
             scrape_from_container(url_to_scrape, container_id,x)
+        
     
     
 
